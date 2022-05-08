@@ -3,7 +3,15 @@
     "name": "doggyNkitty",
     "slug": "doggyNkitty",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "bundleIdentifier": "org.name.doggyNkitty"
+    },
+    "icon": "./assets/logo.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain"
+    }
   },
   "name": "doggyNkitty"
 }

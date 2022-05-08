@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { StatusBar } from "react-native";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
-import { Text, Image } from "react-native";
+import { Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Asset } from "expo-asset";
 import theme from "./theme";
 import { ThemeProvider } from "styled-components";
 
-const loadImages = (images: any[]) => {
+import Navigation from "./navigations";
+import { NavigationContainer } from "@react-navigation/native";
+
+const loadImages = (images: string[] | number[] | string[][] | number[][]) => {
   return images.map((image) => {
     if (typeof image === "string") {
       return Image.prefetch(image);
@@ -18,11 +21,13 @@ const loadImages = (images: any[]) => {
   });
 };
 
-const loadFonts = (fonts: any[]) => {
-  return fonts.map((font: string | Record<string, Font.FontSource>) =>
-    Font.loadAsync(font)
-  );
-};
+const loadFonts = (
+  fonts:
+    | string[]
+    | {
+        [fontFamily: string]: Font.FontSource;
+      }[]
+) => fonts.map((font) => Font.loadAsync(font));
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -37,19 +42,18 @@ export default function App() {
 
   const startLoading = async () => {
     _loadAssets();
-    await new Promise((resolve) => setTimeout(resolve, 10000));
   };
 
   return isReady ? (
     <ThemeProvider theme={theme}>
-      <StatusBar barStyle="dark-content"></StatusBar>
-      <Text>finish to load</Text>
+      <StatusBar barStyle="dark-content" />
+      <Navigation />
     </ThemeProvider>
   ) : (
     <AppLoading
       startAsync={startLoading}
       onFinish={onFinish}
-      onError={console.warn}
+      onError={console.error}
     />
   );
 }
