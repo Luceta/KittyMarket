@@ -2,10 +2,12 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import colors from "../theme/color";
 import TabsOptions from "./TabOption";
-import { Text, Image, View, TextBase } from "react-native";
-
+import { Text, Image } from "react-native";
 import GobackButton from "../components/GobackButton";
-import EtcHeader from "../components/EtcHeader";
+
+import leftArrow from "../../assets/icon/icon-arrow-left.png";
+import etcIcon from "../../assets/icon/s-icon-more-vertical.png";
+import searchIcon from "../../assets/icon/icon-search.png";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,8 +16,8 @@ export default function MainTabs() {
     <Tab.Navigator
       screenOptions={{
         headerTitle: "",
-        headerLeft: () => <GobackButton />,
-        headerRight: () => <EtcHeader />,
+        headerLeft: () => <GobackButton imgSrc={leftArrow} />,
+        headerRight: () => <GobackButton imgSrc={etcIcon} />,
       }}
     >
       {TabsOptions.map((tab) => {
@@ -28,7 +30,7 @@ export default function MainTabs() {
               options={{
                 headerTitle: "냥이마켓 피드",
                 headerTitleAlign: "left",
-                headerRight: () => <EtcHeader />, //TODO: make other component
+                headerRight: () => <GobackButton imgSrc={searchIcon} />,
 
                 tabBarIcon: ({ focused }) => (
                   <Image

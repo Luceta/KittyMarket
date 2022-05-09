@@ -7,11 +7,11 @@ const Goback = styled.View`
   padding: 16px;
 `;
 
-const GobackButton = () => {
+const GobackButton = ({ imgSrc }) => {
   return (
     <TouchableOpacity accessibilityRole="button">
       <Goback>
-        <Image source={leftArrow} />
+        <Image source={imgSrc} />
       </Goback>
     </TouchableOpacity>
   );

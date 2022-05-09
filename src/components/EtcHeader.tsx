@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Image } from "react-native";
+import { TouchableOpacity, Image, Text } from "react-native";
 import etcIcon from "../../assets/icon/icon-more-vertical.png";
 import styled from "styled-components/native";
 
