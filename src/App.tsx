@@ -9,7 +9,6 @@ import theme from "./theme";
 import { ThemeProvider } from "styled-components";
 
 import Navigation from "./navigations";
-import { NavigationContainer } from "@react-navigation/native";
 
 const loadImages = (images: string[] | number[] | string[][] | number[][]) => {
   return images.map((image) => {
@@ -47,6 +46,7 @@ export default function App() {
   return isReady ? (
     <ThemeProvider theme={theme}>
       <StatusBar barStyle="dark-content" />
+
       <Navigation />
     </ThemeProvider>
   ) : (

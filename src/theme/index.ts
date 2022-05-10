@@ -11,6 +11,7 @@ const lightTheme: Theme = {
   textColor: "#1e272e",
   accentColor: colors.YELLOW_COLOR,
 };
+
 const darkTheme: Theme = {
   mainBgColor: colors.BLACK_COLOR,
   textColor: "#d2dae2",

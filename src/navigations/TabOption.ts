@@ -2,12 +2,13 @@ import Home from "../screens/Home";
 import Post from "../screens/Post";
 import Profile from "../screens/Profile";
 import Chat from "../screens/Chat";
+import { ImageSourcePropType } from "react-native";
 
 interface TabOption {
   name: string;
   component: React.FC;
-  inactiveIcon: NodeRequire;
-  activeIcon?: NodeRequire;
+  inactiveIcon: ImageSourcePropType;
+  activeIcon: ImageSourcePropType;
 }
 
 const TabOptions: TabOption[] = [

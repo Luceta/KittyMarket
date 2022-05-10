@@ -1,11 +1,14 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import MainTabs from "./MainTab";
+import AuthStack from "./AuthStack";
 
-const Navigation = () => (
-  <NavigationContainer>
-    <MainTabs />
-  </NavigationContainer>
-);
+const Navigation = () => {
+  return (
+    <NavigationContainer>
+      <AuthStack />
+    </NavigationContainer>
+  );
+};
 
 export default Navigation;
