@@ -1,4 +1,4 @@
-import Image from "./Images";
+import Image from "./Image";
 import Input from "./Input";
 import Button from "./Button";
 
