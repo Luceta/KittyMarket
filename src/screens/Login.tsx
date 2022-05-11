@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
-
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styled from "styled-components/native";
 import { Image, Input, Button } from "../components";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { validateEmail, removeWhitespace } from "../utils/user";
 
 import logo from "../../assets/logo.png";
 
@@ -10,36 +11,31 @@ const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  /*background-color: "#ffff";*/
   padding: 0 20px;
+`;
+
+const ErrorText = styled.Text`
+  width: 100%;
+  align-items: flex-start;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 14px;
+  color: ${({ theme }) => theme.colors.ERROR_COLOR};
 `;
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const passwordRef = useRef();
-  const [errorMessage, setErrorMessage] = useState("");
-  const [disabled, setDisabled] = useState(true);
 
-  const validateEmail = (email) => {
-    const regex =
-      /^[0-9?A-z0-9?]+(\.)?[0-9?A-z0-9?]+@[0-9?A-z]+\.[A-z]{2}.?[A-z]{0,3}$/;
-    return regex.test(email);
-  };
+  const [error, setError] = useState(false);
 
-  const removeWhitespace = (text) => {
-    const regex = /\s/g;
-    return text.replace(regex, "");
-  };
+  const insets = useSafeAreaInsets();
 
-  const _handleEmailChange = (email) => {
+  const _handleEmailChange = (email: string) => {
     const changedEmail = removeWhitespace(email);
     setEmail(changedEmail);
-    setErrorMessage(
-      validateEmail(changedEmail) ? "" : "Please verify your email."
-    );
   };
-  const _handlePasswordChange = (password) => {
+  const _handlePasswordChange = (password: string) => {
     setPassword(removeWhitespace(password));
   };
 
@@ -48,7 +44,7 @@ const Login = ({ navigation }) => {
       contentContainerStyle={{ flex: 1 }}
       extraScrollHeight={20}
     >
-      <Container>
+      <Container insets={insets}>
         <Image url={logo} imageStyle={{ borderRadius: 8 }} />
         <Input
           label="Email"
@@ -58,7 +54,6 @@ const Login = ({ navigation }) => {
           returnKeyType="next"
         />
         <Input
-          ref={passwordRef}
           label="Password"
           value={password}
           onChangeText={_handlePasswordChange}
@@ -66,8 +61,11 @@ const Login = ({ navigation }) => {
           returnKeyType="done"
           isPassword
         />
+        {error && (
+          <ErrorText>*이메일 또는 비밀번호가 일치하지 않습니다.</ErrorText>
+        )}
 
-        <Button title="Login" disabled={disabled} isFilled={true} />
+        <Button title="Login" isFilled={true} />
         <Button
           title="Sign up with email"
           onPress={() => navigation.navigate("Signup")}

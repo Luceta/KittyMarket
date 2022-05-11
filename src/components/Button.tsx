@@ -21,15 +21,21 @@ const Title = styled.Text`
     isFilled ? theme.colors.WHITE_COLOR : theme.colors.DARK_GREY};
 `;
 
-interface Button {
-  containerStyle: object;
+interface ButtonProps {
+  containerStyle?: object;
   title: string;
-  onPress: funcType;
-  isFilled: boolean;
-  disabled: boolean;
+  onPress?: () => {};
+  isFilled?: boolean;
+  disabled?: boolean;
 }
 
-const Button = ({ containerStyle, title, onPress, isFilled, disabled }) => {
+const Button = ({
+  containerStyle,
+  title,
+  onPress,
+  isFilled,
+  disabled,
+}: ButtonProps) => {
   return (
     <Container
       style={containerStyle}

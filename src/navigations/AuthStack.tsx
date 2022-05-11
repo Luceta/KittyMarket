@@ -12,8 +12,16 @@ const AuthStack = () => {
         headerTitleAlign: "center",
       }}
     >
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{ headerBackTitleVisible: false }}
+      />
     </Stack.Navigator>
   );
 };

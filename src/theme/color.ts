@@ -6,6 +6,7 @@ type Colors = {
   DARK_GREY: string;
   LIGHT_GREY: string;
   MAIN_BG: string;
+  ERROR_COLOR: string;
 };
 
 const colors: Colors = {
@@ -16,6 +17,7 @@ const colors: Colors = {
   LIGHT_GREY: "#dfe0df",
   DARK_GREY: "#767676",
   MAIN_BG: "#c98128",
+  ERROR_COLOR: "#eb5757",
 };
 
 export default colors;
