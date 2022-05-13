@@ -24,13 +24,14 @@ const Label = styled.Text`
 interface InputBasicProps {
   label: string;
   value?: string;
-  onChangeText: (x: string) => void;
-  onSubmitEditing: () => void;
-  onBlur: () => void;
+  onChangeText?: (x: string) => void;
+  onSubmitEditing?: () => void;
+  onBlur?: () => void;
   placeholder?: string;
   returnKeyType?: ReturnKeyTypeOptions;
   maxLength?: number;
-  disabled: Boolean;
+  disabled?: Boolean;
+  isPassword?: Boolean;
 }
 
 const Input = ({
@@ -42,6 +43,7 @@ const Input = ({
   returnKeyType,
   maxLength,
   disabled,
+  isPassword,
 }: InputBasicProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -79,7 +81,7 @@ const StyledTextInput = styled.TextInput.attrs(({ theme }) => ({
   font-size: 14px;
   line-height: 14px;
   border-bottom-width: 1px;
-  border-color:${({ theme, isFocused }: Focused) =>
-    isFocused ? theme.colors.BROWN_COLOR : theme.colors.DARK_GREY}
+  border-color: ${({ theme, isFocused }: Focused) =>
+    isFocused ? theme.colors.BROWN_COLOR : theme.colors.DARK_GREY};
   border-radius: 4px;
 `;

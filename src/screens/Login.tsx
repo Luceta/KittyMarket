@@ -1,11 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styled from "styled-components/native";
 import { Image, Input, Button } from "../components";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { validateEmail, removeWhitespace } from "../utils/user";
-
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import logo from "../../assets/logo.png";
+import { removeWhitespace } from "../utils/user";
 
 const Container = styled.View`
   flex: 1;
@@ -23,20 +22,27 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.colors.ERROR_COLOR};
 `;
 
-const Login = ({ navigation }) => {
+type RootStackParamList = {
+  Login: {};
+};
+
+type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;
+
+const Login: React.FC<LoginProps> = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState(false);
 
-  const insets = useSafeAreaInsets();
-
   const _handleEmailChange = (email: string) => {
-    const changedEmail = removeWhitespace(email);
-    setEmail(changedEmail);
+    setEmail(email);
   };
   const _handlePasswordChange = (password: string) => {
-    setPassword(removeWhitespace(password));
+    console.log("original:", password);
+    const newPassword = removeWhitespace(password);
+    console.log(newPassword, "check new Password");
+
+    setPassword(password);
   };
 
   return (
@@ -44,7 +50,7 @@ const Login = ({ navigation }) => {
       contentContainerStyle={{ flex: 1 }}
       extraScrollHeight={20}
     >
-      <Container insets={insets}>
+      <Container>
         <Image url={logo} imageStyle={{ borderRadius: 8 }} />
         <Input
           label="Email"

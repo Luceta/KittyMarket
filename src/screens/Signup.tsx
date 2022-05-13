@@ -8,7 +8,6 @@ const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.background};
   padding: 40px 20px;
 `;
 
@@ -39,8 +38,8 @@ const Signup = () => {
         <Image
           rounded
           showButton
-          url={photoUrl ? photoUrl : profileIcon}
-          onChangeImage={(url: string) => setPhotoUrl(url)}
+          url={photoUrl ? { uri: photoUrl } : profileIcon}
+          onChangeImage={(url) => setPhotoUrl(url)}
         />
         <Input
           label="Email"

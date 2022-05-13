@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Platform, Alert } from "react-native";
+import { Platform, Alert, ImageURISource } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import styled from "styled-components/native";
 import { ImageSourcePropType } from "react-native";
@@ -10,7 +10,11 @@ const Container = styled.View`
   margin-bottom: 30px;
 `;
 
-const StyledImage = styled.Image`
+type StyledImageProps = {
+  rounded?: Boolean;
+};
+
+const StyledImage = styled.Image<StyledImageProps>`
   width: 100px;
   height: 100px;
   border-radius: ${({ rounded }) => (rounded ? 50 : 0)}px;
@@ -34,7 +38,11 @@ const ButtonIcon = styled(MaterialIcons).attrs({
   color: ${({ theme }) => theme.colors.WHITE_COLOR};
 `;
 
-const PhotoButton = ({ onPress }) => {
+type PhotoButton = {
+  onPress: () => void;
+};
+
+const PhotoButton = ({ onPress }: PhotoButton) => {
   return (
     <ButtonContainer onPress={onPress}>
       <ButtonIcon />
@@ -42,13 +50,25 @@ const PhotoButton = ({ onPress }) => {
   );
 };
 
-interface Image {
+type ImageUriObj = {
+  url: ImageURISource;
+};
+
+interface ImageProps {
   url: ImageSourcePropType;
   imageStyle?: Object;
+  rounded?: Boolean;
+  showButton?: Boolean;
+  onChangeImage?: (url: string) => void;
 }
 
-const Image = ({ url, imageStyle, rounded, showButton, onChangeImage }) => {
-  const [isLocalImg, setIsLocalImg] = useState(true);
+const Image = ({
+  url,
+  imageStyle,
+  rounded,
+  showButton,
+  onChangeImage,
+}: ImageProps) => {
   const _handleEditButton = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -58,29 +78,20 @@ const Image = ({ url, imageStyle, rounded, showButton, onChangeImage }) => {
         quality: 1,
       });
 
-      console.log(result, "check result");
-
       if (!result.cancelled) {
-        onChangeImage(result.uri);
-        setIsLocalImg(!isLocalImg);
+        onChangeImage?.(result.uri);
       }
-    } catch (e) {
-      Alert.alert("Photo Error", e.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+        Alert.alert("Photo Error", error.message);
+      }
     }
   };
 
   return (
     <Container>
-      {isLocalImg ? (
-        <StyledImage source={url} style={imageStyle} rounded={rounded} />
-      ) : (
-        <StyledImage
-          source={{ url: url }}
-          style={imageStyle}
-          rounded={rounded}
-        />
-      )}
-
+      <StyledImage source={url} style={imageStyle} rounded={rounded} />
       {showButton && <PhotoButton onPress={_handleEditButton} />}
     </Container>
   );

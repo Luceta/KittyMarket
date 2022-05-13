@@ -7,8 +7,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { Asset } from "expo-asset";
 import theme from "./theme";
 import { ThemeProvider } from "styled-components";
-
 import Navigation from "./navigations";
+import { ProgressProvider } from "./contexts";
 
 const loadImages = (images: string[] | number[] | string[][] | number[][]) => {
   return images.map((image) => {
@@ -45,9 +45,10 @@ export default function App() {
 
   return isReady ? (
     <ThemeProvider theme={theme}>
-      <StatusBar barStyle="dark-content" />
-
-      <Navigation />
+      <ProgressProvider>
+        <StatusBar barStyle="dark-content" />
+        <Navigation />
+      </ProgressProvider>
     </ThemeProvider>
   ) : (
     <AppLoading
